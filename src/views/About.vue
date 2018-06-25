@@ -7,6 +7,15 @@
       <div>LastName: {{userInfo.lastName}}</div>
       <div>gender: {{userInfo.gender}}</div>
     </div>
+    <button v-bind:disabled="isButtonDisabled">Button</button>&nbsp;
+    <button :disabled="isButtonDisabled">Button</button>&nbsp;
+    <a v-on:click="clickEvent">Hello</a>&nbsp;
+    <a @click="clickEvent">Hello</a>
+    <div>
+      <span v-for="(user, index) in userList" :key="user.id">
+        {{user.name}}--{{user.age}}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -15,10 +24,22 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'about',
+  data () {
+    return {
+      isButtonDisabled: false,
+      userList: [
+        { id: 1, name: 'a', age: 18 },
+        { id: 2, name: 'b', age: 19 },
+      ]
+    }
+  },
   methods: {
     ...mapActions([
       'fetchUser'
-    ])
+    ]),
+    clickEvent: function () {
+      console.log('Hello')
+    }
   },
   computed: {
     ...mapGetters([
@@ -32,3 +53,14 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+  a {
+    text-decoration: underline;
+    color: blue;
+
+    &:hover {
+      cursor: pointer;
+      color: red;
+    }
+  }
+</style>
